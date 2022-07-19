@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+    
+    <title>Hello, world!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Foundation:wght@700&display=swap" rel="stylesheet">
+    <style>
+        *{ padding: 0; margin: 0; box-sizing: border-box; 
+            font-family: 'Edu NSW ACT Foundation', cursive;}
+        .mainDiv{
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            background:#3498;
+        }
+        .centerDiv{
+            position :absolute;
+            top:50%;
+            left:50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class ="mainDiv">
+        <div class="centerDiv">
+            <h1>Welcome To Typing Speed Test</h1>
+            <Br>
+            <h2 id="msg"> </h2>
+            <Br>
+            <textarea  id="mywords" cols="100" rows="10" placeholder="Remember, be nice!"></textarea>
+            <br>
+            <button id="btn" class="mainbtn">Start</button>
+        </div>
+    </div>
+<script>
+    const setofWords = [
+    " Nature writing is nonfiction or fiction prose or poetry about the natural environment ",
+    "Lamborghini was an engine supplier in Formula One for the 1989 through 1993 Formula One seasons. It supplied engines to Larrousse (1989–1990, 1992–1993), Lotus (1990), Ligier (1991), Minardi (1992), and to the Modena team in 1991. While the latter is commonly referred to as a factory team, the company saw itself as a supplier, not a backer. ",
+
+    "Nature writing often draws heavily on scientific information and facts about the natural world; at the same time, it is frequently written in the first person and incorporates personal observations of and philosophical reflections upon nature.",
+
+    "Ferruccio Lamborghini, an Italian manufacturing magnate, founded Automobili Ferruccio Lamborghini S.p.A. in 1963 to compete with Ferrari. The company was noted for using a rear mid-engine, rear-wheel drive layout. ",
+    " The firm's ownership changed three times after 1973, including a bankruptcy in 1978. American Chrysler Corporation took control of Lamborghini in 1987 and sold it to Malaysian investment group Mycom Setdco and Indonesian group V'Power Corporation in 1994.",
+    "The Mimrans sold Lamborghini to the Chrysler Corporation in 1987. After replacing the Countach with the Diablo and discontinuing the Jalpa and the LM002, Chrysler sold Lamborghini to Malaysian investment group Mycom Setdco and Indonesian group V'Power Corporation in 1994.",
+    " In 1998, Mycom Setdco and V'Power sold Lamborghini to the Volkswagen Group where it was placed under the control of the group's Audi division. New products and model lines were introduced to the brand's portfolio and brought to the market and saw an increased productivity for the brand Lamborghini. ",
+    "How to Find IP Address of Gmail Sender? 1. When you open the e-mail you could see a small down arrow button next to Reply button. Just click that to get some options listed. ",
+    ];
+    
+const msg = document.getElementById('msg');
+const typewords = document.getElementById('mywords');
+constbtn = document.getElementById('btn');
+let startTime , endTime;
+
+const playGame = () =>{
+    let randomNumber = Math.floor(Math.random()*setofWords.length)
+    msg.innerText = setofWords[randomNumber];
+    let date = new Date();
+    startTime = date.getTime();
+    btn.innerText = "Done";
+}
+const endPlay = () => {
+    let date = new Date();
+    endTime = date.getTime();
+    let totalTime = ((endTime- startTime)/1000);
+
+    let totatStr = typewords.value;
+    let wordCount = wordCounter(totatStr);
+
+    let speed = Math.round((wordCount / totalTime)* 60);
+
+    let finalMsg = "You typed total at "+ speed+" words per minutes ";
+
+    finalMsg += compareWords(msg.innerText,totatStr);
+    msg.innerText = finalMsg;
+} 
+
+const compareWords = (str1, str2) =>{
+    let words1 = str1.split(" ");
+    let words2 = str2.split(" ");
+    let cnt =0;
+    
+    words1.forEach(function(item, index) {
+        if(item ==words2[index]) {
+            cnt++;
+        
+        
+        }
+    })
+
+    let errorWords = (words1.length  - cnt);
+    return (cnt + " correct out of  " + words1.length + " words and the total numbers of error are " + errorWords + ".");
+}
+const wordCounter =  (str) =>{
+    let response = str.split(" ").length;
+    return response;
+}
+
+btn.addEventListener('click', function(){
+    if(this.innerText =='Start'){
+        typewords.disabled = false;
+        playGame();
+    }
+    else if(this.innerText =="Done")
+    {
+        typewords.disabled = true;
+        btn.innerText = "Start";
+        endPlay();
+    }
+})
+</script>
+</body>
+</html>
